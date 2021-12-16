@@ -16,15 +16,16 @@ export class CommentController {
   async create(
     @Body() createCommentDTO: CreateCommentsDTO,
   ): Promise<CommentDocument> {
-    console.log(
-      '🚀 ~ file: comment.controller.ts ~ line 17 ~ CommentController ~ create ~ createCommentDTO',
-      createCommentDTO,
-    );
     return await this._commentService.create(createCommentDTO);
   }
 
-  @Get()
+  @Get('comments')
   async findAll(): Promise<Comment[]> {
-    return this._commentService.getAllComments();
+    const res = await this._commentService.getAllComments();
+    console.log(
+      '🚀 ~ file: comment.controller.ts ~ line 29 ~ CommentController ~ findAll ~ res',
+      res,
+    );
+    return res;
   }
 }
