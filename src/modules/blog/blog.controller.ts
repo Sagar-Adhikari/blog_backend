@@ -56,9 +56,6 @@ export class BlogController {
   ): Promise<BlogDocument> {
     const { _id } = body;
     const blog: BlogDocument = await this._blogService.findBlogById(_id);
-
-    const newPhoto = new Buffer(JSON.stringify(photoURL)).toString('base64');
-
     blog.photoUrl = 'http://localhost:3000/uploads/' + photoURL.filename;
 
     return await blog.save();
@@ -75,17 +72,6 @@ export class BlogController {
 
   @Get('blog-image/:imageName')
   findImage(@Param('imageName') imageName, @Res() res): Observable<object> {
-    console.log(
-      '🚀 ~ file: blog.controller.ts ~ line 83 ~ BlogController ~ findImage ~ imageName',
-      imageName,
-    );
     return of(res.sendFile(join(process.cwd(), 'uploads/' + imageName)));
-  }
-
-  @Get(':imagepath')
-  getFile(@Param('imagePath') image, @Res() res) {
-    return res.sendFile(join(process.cwd(), 'uploads/' + image), {
-      root: 'uploads',
-    });
   }
 }
